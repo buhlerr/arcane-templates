@@ -1,0 +1,25 @@
+x-arcane:
+  icon: https://www.bazarr.media/assets/img/logo.png
+  icon-light: https://www.bazarr.media/assets/img/logo.png
+  icon-dark: https://www.bazarr.media/assets/img/logo.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: multimedia
+      color: red
+
+services:
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Athens
+    volumes:
+      - /portainer/Files/AppData/Config/bazarr/config:/config
+      - /portainer/Movies:/movies #optional
+      - /portainer/TV:/tv #optional
+    ports:
+      - 6767:6767
+    restart: unless-stopped

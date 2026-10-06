@@ -1,0 +1,70 @@
+x-arcane:
+  icon: https://kestra.io/cdn-cgi/image/f=webp,w=236,h=123,q=80/landing/header-menu/download-logo.svg
+  icon-light: https://kestra.io/cdn-cgi/image/f=webp,w=236,h=123,q=80/landing/header-menu/download-logo.svg
+  icon-dark: https://kestra.io/cdn-cgi/image/f=webp,w=236,h=123,q=80/landing/header-menu/download-logo.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: automation
+      color: pink
+    - name: orchestration
+      color: gray
+
+services:
+  kestra-postgres:
+    image: postgres
+    volumes:
+      - /portainer/Files/AppData/Config/kestra/postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: kestra
+      POSTGRES_USER: kestra
+      POSTGRES_PASSWORD: k3str4
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+
+  kestra:
+    image: kestra/kestra:latest
+    pull_policy: always
+    # Note that this setup with a root user is intended for development purpose.
+    # Our base image runs without root, but the Docker Compose implementation needs root to access the Docker socket
+    user: "root"
+    command: server standalone
+    volumes:
+      - /portainer/Files/AppData/Config/kestra/kestra-data:/app/storage
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /portainer/Files/AppData/Config/kestra/kestra-wd:/tmp/kestra-wd
+    environment:
+      KESTRA_CONFIGURATION: |
+        datasources:
+          kestra-postgres:
+            url: jdbc:postgresql://postgres:5432/kestra
+            driverClassName: org.postgresql.Driver
+            username: kestra
+            password: k3str4
+        kestra:
+          server:
+            basicAuth:
+              enabled: false
+              username: "admin@localhost.dev" # it must be a valid email address
+              password: kestra
+          repository:
+            type: postgres
+          storage:
+            type: local
+            local:
+              basePath: "/app/storage"
+          queue:
+            type: postgres
+          tasks:
+            tmpDir:
+              path: /portainer/Files/AppData/Config/kestra/kestra-wd
+          url: http://localhost:8080/
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    depends_on:
+      kestra-postgres:
+        condition: service_started

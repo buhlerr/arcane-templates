@@ -1,0 +1,22 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/kapowarr.svg
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/kapowarr.svg
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/kapowarr.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: ebooks
+      color: gray
+    - name: comics
+      color: gray
+
+services:
+    kapowarr:
+        container_name: kapowarr
+        volumes:
+            - /portainer/Files/AppData/Config/kapowarr-db:/app/db
+            - /portainer/comics/downloads:/app/temp_downloads
+            - /portainer/comics/kapowarr:/content
+        ports:
+            - 5656:5656
+        image: mrcas/kapowarr:latest

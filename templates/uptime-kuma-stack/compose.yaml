@@ -1,0 +1,24 @@
+x-arcane:
+  icon: https://images.opencollective.com/uptime-kuma/29c5113/logo/256.png
+  icon-light: https://images.opencollective.com/uptime-kuma/29c5113/logo/256.png
+  icon-dark: https://images.opencollective.com/uptime-kuma/29c5113/logo/256.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: tools
+      color: blue
+    - name: network
+      color: gray
+
+# Simple docker-compose.yml
+# You can change your port or volume location
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    volumes:
+      - /portainer/Files/AppData/Config/uptime-kuma-data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 3001:3001  # <Host Port>:<Container Port>
+    restart: always

@@ -1,0 +1,76 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/clickhouse.png
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons/png/clickhouse.png
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons/png/clickhouse.png
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: database
+      color: purple
+
+name: clickhouse
+
+x-ch: &ch
+  build: .
+  image: miget-clickhouse:local
+  restart: unless-stopped
+
+x-ch-env: &ch-env
+  CLICKHOUSE_USER: app
+  CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
+  CLICKHOUSE_DB: app
+  CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"
+
+services:
+  ch-1:
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1:8123/ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    <<: *ch
+    environment:
+      <<: *ch-env
+      KEEPER_ID: "1"
+      REPLICA_NAME: ch-1
+    ports: ["8123:8123", "9000", "9181", "9234"]
+    volumes:
+      - chdata-1:/var/lib/clickhouse
+
+  ch-2:
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1:8123/ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    <<: *ch
+    environment:
+      <<: *ch-env
+      KEEPER_ID: "2"
+      REPLICA_NAME: ch-2
+    ports: ["8123", "9000", "9181", "9234"]
+    volumes:
+      - chdata-2:/var/lib/clickhouse
+
+  ch-3:
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1:8123/ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    <<: *ch
+    environment:
+      <<: *ch-env
+      KEEPER_ID: "3"
+      REPLICA_NAME: ch-3
+    ports: ["8123", "9000", "9181", "9234"]
+    volumes:
+      - chdata-3:/var/lib/clickhouse
+
+volumes:
+  chdata-1:
+  chdata-2:
+  chdata-3:

@@ -1,0 +1,6 @@
+# Dashdot
+
+Dashdot is a modern server dashboard, running on the latest tech, designed with glassmorphism in mind. It is intended to be used for smaller VPS and private servers.
+
+- **Categorias:** system
+- **Documentação:** [Dashdot](https://github.com/xneo1/portainer_templates)

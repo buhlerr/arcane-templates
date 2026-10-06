@@ -1,0 +1,20 @@
+x-arcane:
+  icon: https://dokemon.dev/logo/dokemon-dark-medium.svg
+  icon-light: https://dokemon.dev/logo/dokemon-dark-medium.svg
+  icon-dark: https://dokemon.dev/logo/dokemon-dark-medium.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: management
+      color: yellow
+
+services:
+  dokemon:
+    image: productiveops/dokemon:latest
+    container_name: dokemon
+    restart: unless-stopped
+    ports:
+      - 9090:9090
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /portainer/Files/AppData/Config/dokemon/data:/data

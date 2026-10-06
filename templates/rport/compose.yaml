@@ -1,0 +1,34 @@
+x-arcane:
+  icon: https://images.g2crowd.com/uploads/product/image/large_detail/large_detail_634014ae8000cebecce8a571f9ea316f/cloudradar-gmbh-rport.png
+  icon-light: https://images.g2crowd.com/uploads/product/image/large_detail/large_detail_634014ae8000cebecce8a571f9ea316f/cloudradar-gmbh-rport.png
+  icon-dark: https://images.g2crowd.com/uploads/product/image/large_detail/large_detail_634014ae8000cebecce8a571f9ea316f/cloudradar-gmbh-rport.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: remote-control
+      color: gray
+
+services:
+  rport-server:
+    container_name: rport
+    image: iotech17/rport:latest
+    restart: always
+    privileged: true
+    ports:
+      - 3000:3000
+      - 4822:4822
+      - 10000:8080
+      - 20000-20100:20000-20100
+    volumes:
+      - type: bind
+        source: /portainer/Files/AppData/Config/rport/rportd.conf
+        target: /etc/rport/rportd.conf:ro
+      - type: bind
+        source: /portainer/Files/AppData/Config/rport/rport.key
+        target: /var/lib/rport/rport.key:ro
+      - type: bind
+        source: /portainer/Files/AppData/Config/rport/rport.crt
+        target: /var/lib/rport/rport.crt:ro
+      - type: bind
+        source: /portainer/Files/AppData/Config/rport/data
+        target: /var/lib/rport/

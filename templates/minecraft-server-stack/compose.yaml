@@ -1,0 +1,31 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/minecraft.png
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons/png/minecraft.png
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons/png/minecraft.png
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: game-servers
+      color: gray
+
+name: minecraft
+
+services:
+  minecraft:
+    image: itzg/minecraft-server:java25
+    restart: unless-stopped
+    environment:
+      EULA: ${EULA}
+      TYPE: ${TYPE:-PAPER}
+      VERSION: ${VERSION:-LATEST}
+      MEMORY: ${MEMORY:-2G}
+      MOTD: ${MOTD:-A Miget Minecraft Server}
+    ports:
+      - "25565:25565"
+    volumes:
+      - mcdata:/data
+    stdin_open: true
+    tty: true
+
+volumes:
+  mcdata:

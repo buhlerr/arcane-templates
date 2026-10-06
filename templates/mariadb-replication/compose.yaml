@@ -1,0 +1,48 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/mariadb.png
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons/png/mariadb.png
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons/png/mariadb.png
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: database
+      color: purple
+
+name: mariadb-replication
+
+services:
+  mariadb-primary:
+    image: mariadb:11.8
+    restart: unless-stopped
+    command: ["--log-bin", "--server-id=1", "--log-basename=primary"]
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE:-app}
+      MARIADB_USER: ${MARIADB_USER:-app}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_REPLICATION_USER: ${MARIADB_REPLICATION_USER:-repl}
+      MARIADB_REPLICATION_PASSWORD: ${MARIADB_REPLICATION_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - primary-data:/var/lib/mysql
+
+  mariadb-replica:
+    image: mariadb:11.8
+    restart: unless-stopped
+    command: ["--server-id=2", "--read-only=ON"]
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_MASTER_HOST: mariadb-primary
+      MARIADB_REPLICATION_USER: ${MARIADB_REPLICATION_USER:-repl}
+      MARIADB_REPLICATION_PASSWORD: ${MARIADB_REPLICATION_PASSWORD}
+    ports:
+      - "3307:3306"
+    depends_on:
+      - mariadb-primary
+    volumes:
+      - replica-data:/var/lib/mysql
+
+volumes:
+  primary-data:
+  replica-data:

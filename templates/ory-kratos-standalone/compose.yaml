@@ -1,0 +1,20 @@
+x-arcane:
+  icon: https://raw.githubusercontent.com/ory/meta/master/static/banners/kratos.svg
+  icon-light: https://raw.githubusercontent.com/ory/meta/master/static/banners/kratos.svg
+  icon-dark: https://raw.githubusercontent.com/ory/meta/master/static/banners/kratos.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: identity-management
+      color: yellow
+    - name: access-proxy
+      color: orange
+
+services:
+  kratos-selfservice-ui-node:
+    ports:
+      - "4455:4455"
+    environment:
+      - PORT=4455
+      - SECURITY_MODE=
+      - KRATOS_BROWSER_URL=http://127.0.0.1:4433/

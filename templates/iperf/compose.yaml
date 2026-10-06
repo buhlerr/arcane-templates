@@ -1,0 +1,20 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/iperf.svg
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/iperf.svg
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/iperf.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: network
+      color: gray
+
+services:
+  iperf3:
+    restart: unless-stopped
+    container_name: iperf3-server
+    ports:
+      - '5201:5201'
+    image: networkstatic/iperf3
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    command: -s

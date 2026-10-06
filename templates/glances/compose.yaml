@@ -1,0 +1,19 @@
+x-arcane:
+  icon: https://raw.githubusercontent.com/nicolargo/glances/develop/docs/_static/glances-responsive-webdesign.png
+  icon-light: https://raw.githubusercontent.com/nicolargo/glances/develop/docs/_static/glances-responsive-webdesign.png
+  icon-dark: https://raw.githubusercontent.com/nicolargo/glances/develop/docs/_static/glances-responsive-webdesign.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: monitoring
+      color: orange
+
+services:
+  glances-monitoring:
+    image: nicolargo/glances:latest-alpine
+    restart: always
+    pid: host
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - "GLANCES_OPT=-w"

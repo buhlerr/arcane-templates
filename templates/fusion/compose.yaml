@@ -1,0 +1,19 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/fusion.svg
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/fusion.svg
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/fusion.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: rss
+      color: gray
+
+services:
+    fusion:
+        ports:
+            - 8980:8080
+        volumes:
+            - /portainer/Files/AppData/Config/fusion:/data
+        environment:
+            - PASSWORD=changeme
+        image: rook1e404/fusion

@@ -1,0 +1,19 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/actual.svg
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/actual.svg
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/actual.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: finance
+      color: green
+
+services:
+    actual-server:
+        container_name: actual
+        ports:
+            - 5007:5006
+        volumes:
+            - /portainer/Files/AppData/Config/actual:/data
+        image: 'actualbudget/actual-server:latest'
+        restart: unless-stopped

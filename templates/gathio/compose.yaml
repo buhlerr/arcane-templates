@@ -1,0 +1,23 @@
+x-arcane:
+  icon: https://gath.io/og-image.jpg
+  icon-light: https://gath.io/og-image.jpg
+  icon-dark: https://gath.io/og-image.jpg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: social
+      color: gray
+    - name: events
+      color: gray
+
+services:
+    gathio:
+        build: .
+        links:
+            - mongo
+        ports:
+            - 3022:3000
+    mongo:
+        image: mongo:latest
+        volumes:
+             - /portainer/Files/AppData/Config/gathio/mongodb_data_db:/data/db

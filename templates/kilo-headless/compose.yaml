@@ -1,0 +1,27 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/kilo-headless.svg
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/kilo-headless.svg
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/kilo-headless.svg
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: ai-agents
+      color: pink
+
+name: kilo
+
+services:
+  kilo:
+    build: .
+    image: miget-kilo:local
+    restart: unless-stopped
+    environment:
+      KILO_SERVER_PASSWORD: ${KILO_SERVER_PASSWORD}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+    ports:
+      - "5000:5000"
+    volumes:
+      - workspace:/workspace
+
+volumes:
+  workspace:

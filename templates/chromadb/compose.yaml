@@ -1,0 +1,26 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/chromadb.svg
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/chromadb.svg
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/chromadb.svg
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: search-vectors
+      color: gray
+
+name: chromadb
+
+services:
+  chroma:
+    image: chromadb/chroma:1.5.9
+    restart: unless-stopped
+    environment:
+      IS_PERSISTENT: "TRUE"
+      ANONYMIZED_TELEMETRY: "FALSE"
+    ports:
+      - "8000:8000"
+    volumes:
+      - chromadata:/chroma/chroma
+
+volumes:
+  chromadata:

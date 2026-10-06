@@ -1,0 +1,24 @@
+x-arcane:
+  icon: https://downloads.filestash.app/brand/logo_white.svg
+  icon-light: https://downloads.filestash.app/brand/logo_white.svg
+  icon-dark: https://downloads.filestash.app/brand/logo_white.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: files
+      color: gray
+
+services:
+  filestash:
+    container_name: filestash
+    hostname: filestash
+    image: machines/filestash:latest
+    restart: unless-stopped
+    expose:
+      - 8334                                      # Web UI
+    environment:
+      - APPLICATION_URL=MYHOSTIP  # Your host LAN IP
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /portainer/Files/AppData/Config/filestash/data:/app/data/state
+      - /mnt/MYSMBMOUNT:/mnt/MYSMBMOUNT:shared    # Your SMB mount

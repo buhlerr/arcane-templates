@@ -1,0 +1,35 @@
+x-arcane:
+  icon: https://tabby.sh/32bf32ff6c87e8d18932.svg
+  icon-light: https://tabby.sh/32bf32ff6c87e8d18932.svg
+  icon-dark: https://tabby.sh/32bf32ff6c87e8d18932.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: productivity
+      color: blue
+    - name: dev-tools
+      color: blue
+
+services:
+
+  tabby:
+    image: parksauce/tabby
+    container_name: tabby
+    ports:
+      - 8010:80
+    restart: unless-stopped
+    
+  tabby-db:
+    image: linuxserver/mariadb
+    container_name: tabby-db
+    environment:
+      - PUID=1000 # Run 'id' in your terminal to get this value
+      - PGID=1000 # Run 'id' in your terminal to get this value
+      - MYSQL_ROOT_PASSWORD=ROOT_ACCESS_PASSWORD
+      - TZ=Europe/Athens
+      - MYSQL_DATABASE=tabby
+      - MYSQL_USER=tabby
+      - MYSQL_PASSWORD=tabby
+    volumes:
+      - /portainer/Files/AppData/Config/tabby/db:/config
+    restart: unless-stopped

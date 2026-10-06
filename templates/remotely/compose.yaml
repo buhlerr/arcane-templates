@@ -1,0 +1,17 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/remotely.svg
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/remotely.svg
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/remotely.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: remote-control
+      color: gray
+
+services:
+  remotely:
+    image: immybot/remotely:latest
+    ports:
+      - 5009:5000
+    volumes:
+      - /portainer/Files/AppData/Config/remotely:/remotely-data

@@ -1,0 +1,32 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/file-browser.png
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons/png/file-browser.png
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons/png/file-browser.png
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: object-storage
+      color: purple
+
+name: filebrowser
+
+services:
+  filebrowser:
+    image: filebrowser/filebrowser:v2.63.18
+    restart: unless-stopped
+    environment:
+      FB_PORT: "5000"
+      FB_ADDRESS: 0.0.0.0
+      FB_DATABASE: /database/filebrowser.db
+      FB_ROOT: /srv
+      FB_USERNAME: ${FB_USERNAME:-admin}
+      FB_PASSWORD: ${FB_PASSWORD}
+    ports:
+      - "5000:5000"
+    volumes:
+      - files:/srv
+      - database:/database
+
+volumes:
+  files:
+  database:

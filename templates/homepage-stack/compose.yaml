@@ -1,0 +1,19 @@
+x-arcane:
+  icon: https://raw.githubusercontent.com/benphelps/homepage/main/images/preview.png
+  icon-light: https://raw.githubusercontent.com/benphelps/homepage/main/images/preview.png
+  icon-dark: https://raw.githubusercontent.com/benphelps/homepage/main/images/preview.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: dashboard
+      color: gray
+
+services:
+  homepage:
+    image: ghcr.io/benphelps/homepage:latest
+    container_name: homepage
+    ports:
+      - 6006:3000
+    volumes:
+      - /portainer/Files/AppData/Config/homepage:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock

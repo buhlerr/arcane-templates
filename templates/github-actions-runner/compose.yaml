@@ -1,0 +1,32 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/github.png
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons/png/github.png
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons/png/github.png
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: dev-tools
+      color: blue
+
+name: github-runner
+
+services:
+  runner:
+    image: myoung34/github-runner:2.336.0
+    restart: unless-stopped
+    environment:
+      ACCESS_TOKEN: ${ACCESS_TOKEN}
+      RUNNER_SCOPE: ${RUNNER_SCOPE:-repo}
+      REPO_URL: ${REPO_URL:-}
+      ORG_NAME: ${ORG_NAME:-}
+      RUNNER_NAME_PREFIX: ${RUNNER_NAME_PREFIX:-miget}
+      LABELS: ${LABELS:-self-hosted,linux,x64,miget}
+      EPHEMERAL: ${EPHEMERAL:-false}
+      DISABLE_AUTO_UPDATE: "true"
+      CONFIGURED_ACTIONS_RUNNER_FILES_DIR: /runner-state
+      RUNNER_WORKDIR: /tmp/runner/work
+    volumes:
+      - runnerstate:/runner-state
+
+volumes:
+  runnerstate:

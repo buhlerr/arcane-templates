@@ -1,0 +1,25 @@
+x-arcane:
+  icon: https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/datadog_agent.png
+  icon-light: https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/datadog_agent.png
+  icon-dark: https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/datadog_agent.png
+  urls:
+    - https://github.com/portainer/templates
+  tags:
+    - name: monitoring
+      color: orange
+
+version: '3'
+services:
+  datadog-agent:
+    image: datadog/agent:latest
+    deploy:
+      mode: global
+      restart_policy:
+        condition: any
+    environment:
+      - DD_API_KEY=$API_KEY
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro

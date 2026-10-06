@@ -1,0 +1,20 @@
+x-arcane:
+  icon: https://github.com/ajslater/codex/raw/main/codex/static_src/img/logo.svg
+  icon-light: https://github.com/ajslater/codex/raw/main/codex/static_src/img/logo.svg
+  icon-dark: https://github.com/ajslater/codex/raw/main/codex/static_src/img/logo.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: ebooks
+      color: gray
+
+services:
+  codex:
+      image: docker.io/ajslater/codex
+      container_name: codex
+      volumes:
+          - /portainer/Files/AppData/Config/codex:/config
+          - /portainer/comics:/comics:ro
+      ports:
+          - 9810:9810
+      restart: on-failure

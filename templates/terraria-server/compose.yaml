@@ -1,0 +1,31 @@
+x-arcane:
+  icon: https://avatars.githubusercontent.com/u/584474
+  icon-light: https://avatars.githubusercontent.com/u/584474
+  icon-dark: https://avatars.githubusercontent.com/u/584474
+  urls:
+    - https://github.com/lissy93/portainer-templates
+  tags:
+    - name: games
+      color: gray
+    - name: other
+      color: gray
+
+services:
+  terraria-server:
+    # GitHub mirror: ghcr.io/hexlo/terraria-server-docker:latest
+    image: hexlo/terraria-server-docker:latest
+    container_name: terraria-server
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    ports:
+      - "7779:7777"
+    volumes:
+      - terraria-worlds:/root/.local/share/Terraria/Worlds
+    environment:
+      - world=/root/.local/share/Terraria/Worlds/newworld.wld
+      - password=${SERVER_PASSWORD:-changeme123}
+      - motd=${MOTD:-Welcome to my server!}
+
+volumes:
+  terraria-worlds:

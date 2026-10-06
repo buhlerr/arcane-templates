@@ -1,0 +1,22 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/hasty-paste.svg
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/hasty-paste.svg
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/hasty-paste.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: productivity
+      color: blue
+
+services:
+  paste-bin:
+    container_name: hasty-paste
+    image: ghcr.io/enchant97/hasty-paste:latest
+    restart: unless-stopped
+    volumes:
+      - portainer/Files/AppData/Config/hasty-paste:/app/data
+    ports:
+      - 98000:8000
+
+volumes:
+  data:

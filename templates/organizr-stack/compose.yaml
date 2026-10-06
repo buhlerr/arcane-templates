@@ -1,0 +1,25 @@
+x-arcane:
+  icon: https://raw.githubusercontent.com/xneo1/portainer_templates/master/Images/organizr-icon.png
+  icon-light: https://raw.githubusercontent.com/xneo1/portainer_templates/master/Images/organizr-icon.png
+  icon-dark: https://raw.githubusercontent.com/xneo1/portainer_templates/master/Images/organizr-icon.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: tools
+      color: blue
+    - name: dashboard
+      color: gray
+
+services:
+  organizr:
+    image: linuxserver/organizr
+    container_name: organizr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Athens
+    volumes:
+      - /portainer/Files/AppData/Config/organizr:/config
+    ports:
+      - 9983:80
+    restart: unless-stopped

@@ -1,0 +1,23 @@
+x-arcane:
+  icon: https://grocy.info/img/grocy_logo.svg
+  icon-light: https://grocy.info/img/grocy_logo.svg
+  icon-dark: https://grocy.info/img/grocy_logo.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: tools
+      color: blue
+
+services:
+  grocy:
+    image: lscr.io/linuxserver/grocy:latest
+    container_name: grocy
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: 'Europe/Athens'
+    volumes:
+      - /portainer/Files/AppData/Config/Grocy:/config
+    ports:
+      - 9283:80
+    restart: unless-stopped

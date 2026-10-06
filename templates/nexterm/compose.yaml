@@ -1,0 +1,20 @@
+x-arcane:
+  icon: https://docs.nexterm.dev/logo.png
+  icon-light: https://docs.nexterm.dev/logo.png
+  icon-dark: https://docs.nexterm.dev/logo.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: remote-control
+      color: gray
+
+services:
+  nexterm:
+    ports:
+      - "6989:6989"
+    restart: always
+    volumes:
+      - /portainer/Files/AppData/Config/nexterm:/app/data
+    image: germannewsmaker/nexterm:1.0.2-OPEN-PREVIEW
+volumes:
+  nexterm:

@@ -1,0 +1,20 @@
+x-arcane:
+  icon: https://noted.lol/content/images/2023/02/gokapi-self-hosted-main.png
+  icon-light: https://noted.lol/content/images/2023/02/gokapi-self-hosted-main.png
+  icon-dark: https://noted.lol/content/images/2023/02/gokapi-self-hosted-main.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: cloud
+      color: yellow
+
+services:
+  gokapi:
+    container_name: Gokapi
+    image: f0rc3/gokapi:latest
+    ports:
+      - 53842:53842
+    volumes:
+      - /portainer/Files/AppData/Config/gokapi/data:/app/data
+      - /portainer/Files/AppData/Config/gokapi/config:/app/config
+    restart: on-failure:5

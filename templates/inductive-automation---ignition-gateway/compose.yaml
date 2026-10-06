@@ -1,0 +1,35 @@
+x-arcane:
+  icon: https://pbs.twimg.com/profile_images/859108636504805376/QHpq7wuh_400x400.jpg
+  icon-light: https://pbs.twimg.com/profile_images/859108636504805376/QHpq7wuh_400x400.jpg
+  icon-dark: https://pbs.twimg.com/profile_images/859108636504805376/QHpq7wuh_400x400.jpg
+  urls:
+    - https://github.com/portainer/templates
+  tags:
+    - name: edge
+      color: gray
+
+services:
+  # Ignition Gateway
+  gateway:
+    image: inductiveautomation/ignition:8.1.8
+    ports:
+      - 8088:8088
+      - 8043:8043
+      - 4446:4446/udp
+    volumes:
+      - gw-data:/usr/local/bin/ignition/data
+    environment:
+      - ACCEPT_IGNITION_EULA=${EULA}
+      - GATEWAY_ADMIN_USERNAME=${adminuser}
+      - GATEWAY_ADMIN_PASSWORD=${adminpass}
+      - IGNITION_EDITION=${gwedition}
+      - TZ=${TZ}  # see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+    command: >
+      -n ${EDGE_ID}
+      -m 1024
+      --
+      wrapper.java.initmemory=512
+      -Dignition.allowunsignedmodules=true
+ 
+volumes:
+  gw-data:

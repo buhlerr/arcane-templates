@@ -1,0 +1,17 @@
+x-arcane:
+  icon: https://github.com/ajnart/dcm/raw/main/public/favicon.png
+  icon-light: https://github.com/ajnart/dcm/raw/main/public/favicon.png
+  icon-dark: https://github.com/ajnart/dcm/raw/main/public/favicon.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: tools
+      color: blue
+
+services:
+  dcm:
+    image: ghcr.io/ajnart/dcm
+    container_name: dcm
+    ports:
+      - "7576:7576"
+    restart: unless-stopped

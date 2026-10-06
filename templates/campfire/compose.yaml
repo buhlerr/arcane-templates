@@ -1,0 +1,30 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/campfire.svg
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/campfire.svg
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/campfire.svg
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: business-apps
+      color: gray
+
+name: campfire
+
+services:
+  campfire:
+    image: ghcr.io/basecamp/once-campfire:sha-df5ed25
+    restart: unless-stopped
+    environment:
+      HTTP_PORT: "5000"
+      DISABLE_SSL: "true"
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE}
+      VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY:-}
+      VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY:-}
+      SENTRY_DSN: ${SENTRY_DSN:-}
+    ports:
+      - "5000:5000"
+    volumes:
+      - storage:/rails/storage
+
+volumes:
+  storage:

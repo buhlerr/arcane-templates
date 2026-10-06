@@ -1,0 +1,24 @@
+x-arcane:
+  icon: https://github.com/shaarli/Shaarli/raw/master/doc/md/images/doc-logo.png
+  icon-light: https://github.com/shaarli/Shaarli/raw/master/doc/md/images/doc-logo.png
+  icon-dark: https://github.com/shaarli/Shaarli/raw/master/doc/md/images/doc-logo.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: link-sharing
+      color: gray
+
+services:
+  shaarli:
+    container_name: Shaarli
+    image: ghcr.io/shaarli/shaarli:latest
+    restart: on-failure
+    ports:
+      - 7755:80
+    volumes:
+      - /portainer/Files/AppData/Config/shaarli/cache:/var/www/shaarli/cache:rw
+      - /portainer/Files/AppData/Config/shaarli/data:/var/www/shaarli/data:rw
+    environment:
+      PUID: 1026
+      PGID: 100
+      TZ: Europe/Athens

@@ -1,0 +1,30 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/valkey.png
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons/png/valkey.png
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons/png/valkey.png
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: caches-key-value
+      color: gray
+
+name: valkey
+
+services:
+  valkey:
+    healthcheck:
+      test: ["CMD", "valkey-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    build: .
+    restart: unless-stopped
+    environment:
+      VALKEY_PASSWORD: ${VALKEY_PASSWORD}
+    ports:
+      - "6379:6379"
+    volumes:
+      - valkeydata:/data
+
+volumes:
+  valkeydata:

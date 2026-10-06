@@ -1,0 +1,24 @@
+x-arcane:
+  icon: https://user-images.githubusercontent.com/958400/154829266-62206846-c6ef-4718-9910-2b83eb6aa41c.png
+  icon-light: https://user-images.githubusercontent.com/958400/154829266-62206846-c6ef-4718-9910-2b83eb6aa41c.png
+  icon-dark: https://user-images.githubusercontent.com/958400/154829266-62206846-c6ef-4718-9910-2b83eb6aa41c.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: tools
+      color: blue
+    - name: dashboard
+      color: gray
+
+services:
+  fenrus:
+    image: revenz/fenrus
+    container_name: fenrus
+    environment:
+      - TZ=Europe/Athens
+    volumes:
+      - /portainer/Files/AppData/Config/fenrus/data:/app/data
+      - /portainer/Files/AppData/Config/fenrus/images:/app/wwwroot/images
+    ports:
+      - 3003:3000
+    restart: unless-stopped

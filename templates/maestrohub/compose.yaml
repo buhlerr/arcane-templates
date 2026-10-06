@@ -1,0 +1,24 @@
+x-arcane:
+  icon: https://avatars.githubusercontent.com/u/219120420?s=400&u=699c593f7490c79736e08eec580fd9af40278576&v=4
+  icon-light: https://avatars.githubusercontent.com/u/219120420?s=400&u=699c593f7490c79736e08eec580fd9af40278576&v=4
+  icon-dark: https://avatars.githubusercontent.com/u/219120420?s=400&u=699c593f7490c79736e08eec580fd9af40278576&v=4
+  urls:
+    - https://github.com/portainer/templates
+  tags:
+    - name: edge
+      color: gray
+
+services:
+  maestrohub:
+    image: us-docker.pkg.dev/maestrohubtests/maestrohub/maestrohub-lite:latest
+    container_name: maestrohub
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+      - "1883:1883"
+      - "8083:8083"
+    volumes:
+      - maestrohub-data:/data
+
+volumes:
+  maestrohub-data:

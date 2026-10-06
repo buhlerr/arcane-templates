@@ -1,0 +1,24 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/owncast.png
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons/png/owncast.png
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons/png/owncast.png
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: media
+      color: red
+
+name: owncast
+
+services:
+  owncast:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+      - "1935:1935"
+    volumes:
+      - owncastdata:/app/data
+
+volumes:
+  owncastdata:

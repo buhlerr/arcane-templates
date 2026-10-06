@@ -1,0 +1,28 @@
+x-arcane:
+  icon: https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/sematext_agent.png
+  icon-light: https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/sematext_agent.png
+  icon-dark: https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/sematext_agent.png
+  urls:
+    - https://github.com/portainer/templates
+  tags:
+    - name: log-management
+      color: yellow
+    - name: monitoring
+      color: orange
+
+version: '3.2'
+services:
+  sematext-agent-docker:
+    image: sematext/sematext-agent-docker
+    deploy:
+      mode: global
+      restart_policy:
+        condition: any
+    environment:
+      - LOGSENE_TOKEN=$LOGSENE_TOKEN
+      - SPM_TOKEN=$SPM_TOKEN
+    restart: always
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock

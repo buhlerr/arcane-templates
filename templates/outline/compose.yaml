@@ -1,0 +1,78 @@
+x-arcane:
+  icon: https://avatars.githubusercontent.com/u/1765001
+  icon-light: https://avatars.githubusercontent.com/u/1765001
+  icon-dark: https://avatars.githubusercontent.com/u/1765001
+  urls:
+    - https://github.com/lissy93/portainer-templates
+  tags:
+    - name: productivity
+      color: blue
+    - name: social
+      color: gray
+
+services:
+  outline:
+    image: docker.getoutline.com/outlinewiki/outline:latest
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      # REQUIRED — generate each with: openssl rand -hex 32
+      SECRET_KEY: ${SECRET_KEY}
+      UTILS_SECRET: ${UTILS_SECRET}
+      # Public URL Outline is served from
+      URL: ${URL:-http://localhost:3000}
+      PORT: "3000"
+      DATABASE_URL: postgres://outline:outline@postgres:5432/outline
+      PGSSLMODE: disable
+      REDIS_URL: redis://redis:6379
+      # Store uploads on a local volume instead of S3/MinIO
+      FILE_STORAGE: local
+      FILE_STORAGE_LOCAL_ROOT_DIR: /var/lib/outline/data
+      FILE_STORAGE_UPLOAD_MAX_SIZE: "262144000"
+      # Optional SMTP — enables email (magic-link) sign-in
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-}
+      SMTP_USERNAME: ${SMTP_USERNAME:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_FROM_EMAIL: ${SMTP_FROM_EMAIL:-}
+      SMTP_SECURE: ${SMTP_SECURE:-true}
+    volumes:
+      - outline-data:/var/lib/outline/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: outline
+      POSTGRES_PASSWORD: outline
+      POSTGRES_DB: outline
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U outline -d outline"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+
+volumes:
+  outline-data:
+  postgres-data:
+  redis-data:

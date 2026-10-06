@@ -1,0 +1,39 @@
+x-arcane:
+  icon: https://gallery.ncnet.nl/upload/2020/05/22/20200522171613-9205fa32.png
+  icon-light: https://gallery.ncnet.nl/upload/2020/05/22/20200522171613-9205fa32.png
+  icon-dark: https://gallery.ncnet.nl/upload/2020/05/22/20200522171613-9205fa32.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: analytics
+      color: gray
+
+services:
+  db:
+    image: mariadb
+    command: --max-allowed-packet=64MB
+    restart: always
+    volumes:
+      - /portainer/Files/AppData/Config/mariadb/matomo:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=enterYOURpwd
+    # env_file:
+    #  - ./db.env
+
+  app:
+    image: matomo
+    restart: always
+    volumes:
+      - /portainer/Files/AppData/Config/matomo/config:/var/www/html/config
+      - /portainer/Files/AppData/Config/matomo/logs:/var/www/html/logs
+      - matomo:/var/www/html
+    environment:
+      - MATOMO_DATABASE_HOST=db
+    # env_file:
+    #   - ./db.env
+    ports:
+      - 8282:80 #changed from default 8080
+
+volumes:
+  db:
+  matomo:

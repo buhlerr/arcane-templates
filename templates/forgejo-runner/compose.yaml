@@ -1,0 +1,27 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/forgejo.png
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons/png/forgejo.png
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons/png/forgejo.png
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: dev-tools
+      color: blue
+
+name: forgejo-runner
+
+services:
+  runner:
+    build: .
+    restart: unless-stopped
+    environment:
+      FORGEJO_URL: ${FORGEJO_URL:-https://codeberg.org}
+      RUNNER_UUID: ${RUNNER_UUID}
+      RUNNER_TOKEN: ${RUNNER_TOKEN}
+      RUNNER_LABELS: ${RUNNER_LABELS:-miget:host}
+      RUNNER_CAPACITY: ${RUNNER_CAPACITY:-1}
+    volumes:
+      - runnerdata:/data
+
+volumes:
+  runnerdata:

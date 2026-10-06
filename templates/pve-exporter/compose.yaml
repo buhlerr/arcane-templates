@@ -1,0 +1,19 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/pve-exporter.svg
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/pve-exporter.svg
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/pve-exporter.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: metrics
+      color: orange
+
+services:
+  pve-exporter:
+    image: prompve/prometheus-pve-exporter
+    container_name: pve-exporter
+    ports:
+      - 9221:9221
+    volumes:
+      - /portainer/Files/AppData/Config/pve-exporter:/etc/pve.yml
+    restart: always

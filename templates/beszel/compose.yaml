@@ -1,0 +1,19 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/beszel.svg
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/beszel.svg
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/beszel.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: monitoring
+      color: orange
+
+services:
+  beszel:
+    image: 'henrygd/beszel'
+    container_name: 'beszel'
+    restart: unless-stopped
+    ports:
+      - '8090:8090'
+    volumes:
+      - /portainer/Files/AppData/Config/beszel:/beszel_data

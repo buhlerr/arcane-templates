@@ -1,0 +1,29 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/cronicle.png
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons/png/cronicle.png
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons/png/cronicle.png
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: automation-jobs
+      color: pink
+
+name: cronicle
+
+services:
+  cronicle:
+    image: soulteary/cronicle:0.9.80
+    restart: unless-stopped
+    hostname: cronicle
+    environment:
+      CRONICLE_WebServer__http_port: "5000"
+      CRONICLE_web_direct_connect: "false"
+    ports:
+      - "5000:5000"
+    volumes:
+      - crondata:/opt/cronicle/data
+      - cronlogs:/opt/cronicle/logs
+
+volumes:
+  crondata:
+  cronlogs:

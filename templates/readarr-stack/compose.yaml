@@ -1,0 +1,25 @@
+x-arcane:
+  icon: https://readarr.com/img/logo.png
+  icon-light: https://readarr.com/img/logo.png
+  icon-dark: https://readarr.com/img/logo.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: books
+      color: gray
+
+services:
+  readarr:
+    image: lscr.io/linuxserver/readarr:develop
+    container_name: readarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Athens
+    volumes:
+      - /portainer/Files/AppData/Config/readarr/data:/config
+      - /portainer/Files/AppData/Config/readarr/books:/books #optional
+      - /portainer/Files/AppData/Config/readarr/downloads:/downloads #optional
+    ports:
+      - 8787:8787
+    restart: unless-stopped

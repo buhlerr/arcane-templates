@@ -1,0 +1,19 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/snippet-box.svg
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/snippet-box.svg
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/snippet-box.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: other
+      color: gray
+
+services:
+  snippet-box:
+    image: pawelmalak/snippet-box
+    container_name: snippet-box
+    volumes:
+      - /portainer/Files/AppData/Config/snippetbox/data:/app/data
+    ports:
+      - 5000:5000
+    restart: unless-stopped

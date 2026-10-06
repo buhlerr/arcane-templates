@@ -1,0 +1,22 @@
+x-arcane:
+  icon: https://raw.githubusercontent.com/Fallenbagel/jellyseerr/develop/public/logo_full.svg
+  icon-light: https://raw.githubusercontent.com/Fallenbagel/jellyseerr/develop/public/logo_full.svg
+  icon-dark: https://raw.githubusercontent.com/Fallenbagel/jellyseerr/develop/public/logo_full.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: entertainment
+      color: red
+
+services:
+    jellyseerr:
+       image: fallenbagel/jellyseerr:latest
+       container_name: jellyseerr
+       environment:
+            - LOG_LEVEL=INFO
+            - TZ=Europe/Athens
+       ports:
+            - 5055:5055
+       volumes:
+            - /portainer/Files/AppData/Config/jellyseer:/app/config
+       restart: unless-stopped

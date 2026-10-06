@@ -1,0 +1,22 @@
+x-arcane:
+  icon: https://github.com/kieraneglin/pinchflat/raw/master/priv/static/images/originals/logo-white-wordmark-with-background.png
+  icon-light: https://github.com/kieraneglin/pinchflat/raw/master/priv/static/images/originals/logo-white-wordmark-with-background.png
+  icon-dark: https://github.com/kieraneglin/pinchflat/raw/master/priv/static/images/originals/logo-white-wordmark-with-background.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: multimedia
+      color: red
+
+version: '3'
+services:
+  pinchflat:
+    image: ghcr.io/kieraneglin/pinchflat:latest
+    environment:
+      # Set the timezone to your local timezone
+      - TZ=Europe/Athens
+    ports:
+      - '8945:8945'
+    volumes:
+      - /portainer/Files/AppData/Config/pinchflat:/config
+      - /portainer/Files/AppData/Config/pinchflat/downloads:/downloads

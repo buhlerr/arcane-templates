@@ -1,0 +1,23 @@
+x-arcane:
+  icon: https://github.com/advplyr/audiobookshelf/raw/master/images/banner.svg
+  icon-light: https://github.com/advplyr/audiobookshelf/raw/master/images/banner.svg
+  icon-dark: https://github.com/advplyr/audiobookshelf/raw/master/images/banner.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: multimedia
+      color: red
+    - name: audio
+      color: red
+
+services:
+  audiobookshelf:
+    container_name: audiobookshelf
+    image: ghcr.io/advplyr/audiobookshelf
+    ports:
+      - 13378:80
+    volumes:
+      - /portainer/Files/AppData/Config/audiobookshelf/audiobooks:/audiobooks
+      - /portainer/Files/AppData/Config/audiobookshelf/podcasts:/podcasts
+      - /portainer/Files/AppData/Config/audiobookshelf/metadata:/metadata
+      - /portainer/Files/AppData/Config/audiobookshelf:/config

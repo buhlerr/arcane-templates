@@ -1,0 +1,37 @@
+x-arcane:
+  icon: https://avatars.githubusercontent.com/u/82116562
+  icon-light: https://avatars.githubusercontent.com/u/82116562
+  icon-dark: https://avatars.githubusercontent.com/u/82116562
+  urls:
+    - https://github.com/lissy93/portainer-templates
+  tags:
+    - name: games
+      color: gray
+    - name: other
+      color: gray
+
+services:
+  valheim:
+    image: ghcr.io/lloesche/valheim-server:latest
+    cap_add:
+      # Optional but recommended: lets the Steam library raise its own priority
+      - sys_nice
+    ports:
+      # Valheim game ports (2456 game, 2457 query, 2458 crossplay/RPC)
+      - "2456-2458:2456-2458/udp"
+    environment:
+      SERVER_NAME: ${SERVER_NAME:-My Server}
+      WORLD_NAME: ${WORLD_NAME:-Dedicated}
+      # SERVER_PASS must be at least 5 characters or the server refuses to start
+      SERVER_PASS: ${SERVER_PASS:-changeme123}
+      SERVER_PUBLIC: "false"
+      TZ: ${TZ:-Etc/UTC}
+    volumes:
+      - valheim-config:/config
+      - valheim-data:/opt/valheim
+    restart: unless-stopped
+    stop_grace_period: 2m
+
+volumes:
+  valheim-config:
+  valheim-data:

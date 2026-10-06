@@ -1,0 +1,18 @@
+x-arcane:
+  icon: https://raw.githubusercontent.com/xneo1/portainer_templates/master/Images/broadlink.png
+  icon-light: https://raw.githubusercontent.com/xneo1/portainer_templates/master/Images/broadlink.png
+  icon-dark: https://raw.githubusercontent.com/xneo1/portainer_templates/master/Images/broadlink.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: smart-home
+      color: gray
+
+services:
+  broadlinkmanager:
+    image: techblog/broadlinkmanager
+    network_mode: host
+    container_name: broadlinkmanager
+    restart: unless-stopped
+    volumes:
+      - /portainer/Files/AppData/Config/broadlinkmanager:/opt/broadlinkmanager/data

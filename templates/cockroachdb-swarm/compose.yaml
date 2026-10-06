@@ -1,0 +1,26 @@
+x-arcane:
+  icon: https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/cockroachdb.png
+  icon-light: https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/cockroachdb.png
+  icon-dark: https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/cockroachdb.png
+  urls:
+    - https://github.com/portainer/templates
+  tags:
+    - name: database
+      color: purple
+
+version: '3'
+
+services:
+  roach1:
+    image: cockroachdb/cockroach:latest
+    command: "start --insecure"
+    deploy:
+      replicas: 1
+    ports:
+      - 8080
+
+  roachN:
+    image: cockroachdb/cockroach:latest
+    command: "start --insecure --join=roach1,roachN"
+    deploy:
+      mode: global

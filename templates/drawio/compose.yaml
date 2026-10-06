@@ -1,0 +1,30 @@
+x-arcane:
+  icon: https://appedreview.com/app/wp-content/uploads/2016/10/Screen-Shot-2016-10-18-at-8.28.57-AM-768x766.png
+  icon-light: https://appedreview.com/app/wp-content/uploads/2016/10/Screen-Shot-2016-10-18-at-8.28.57-AM-768x766.png
+  icon-dark: https://appedreview.com/app/wp-content/uploads/2016/10/Screen-Shot-2016-10-18-at-8.28.57-AM-768x766.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: productivity
+      color: blue
+    - name: drawing
+      color: gray
+
+#This compose file adds draw.io to your stack
+services:
+  drawio:
+    image: fjudith/draw.io
+    container_name: drawio
+    restart: unless-stopped
+    ports:
+      - 28181:8080
+      - 28443:8443
+    environment:
+      PUBLIC_DNS: domain
+      ORGANISATION_UNIT: unit
+      ORGANISATION: org
+      CITY: Athens
+      STATE: Attica
+      COUNTRY_CODE: Greece
+      DRAWIO_GITLAB_URL: http://mygitlab.net
+      DRAWIO_GITLAB_ID: change_to_your_app_id

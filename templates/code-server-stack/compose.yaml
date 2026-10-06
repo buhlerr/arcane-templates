@@ -1,0 +1,30 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/code-server.svg
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/code-server.svg
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/code-server.svg
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: dev-tools
+      color: blue
+
+name: code-server
+
+services:
+  code-server:
+    image: codercom/code-server:4.129.0-trixie
+    restart: unless-stopped
+    command:
+      - --bind-addr
+      - 0.0.0.0:5000
+      - --auth
+      - password
+    environment:
+      PASSWORD: ${PASSWORD}
+    ports:
+      - "5000:5000"
+    volumes:
+      - workspace:/home/coder
+
+volumes:
+  workspace:

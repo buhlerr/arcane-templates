@@ -1,0 +1,24 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/buildkite-agent.svg
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/buildkite-agent.svg
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/buildkite-agent.svg
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: dev-tools
+      color: blue
+
+name: buildkite-agent
+
+services:
+  agent:
+    image: buildkite/agent:3-ubuntu
+    restart: unless-stopped
+    environment:
+      BUILDKITE_AGENT_TOKEN: ${BUILDKITE_AGENT_TOKEN}
+      BUILDKITE_AGENT_TAGS: ${BUILDKITE_AGENT_TAGS:-queue=miget}
+    volumes:
+      - builds:/buildkite/builds
+
+volumes:
+  builds:

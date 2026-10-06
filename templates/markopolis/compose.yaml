@@ -1,0 +1,28 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/markopolis.svg
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/markopolis.svg
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/markopolis.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: notes
+      color: gray
+
+services:
+  markopolis:
+    image: ghcr.io/rishikanthc/markopolis:2.0.0
+    ports:
+      - "81080:80"
+    environment:
+      - MARKOPOLIS_DOMAIN=""
+      - MARKOPOLIS_FRONTEND_URL = ""
+      - MARKOPOLIS_TITLE="Awesome Notes"
+      - MARKOPOLIS_MD_PATH=/app/markdown
+      - MARKOPOLIS_API_KEY=<really long random alpha-numeric string>
+    volumes:
+      - /portainer/Files/AppData/Config/markopolis:/app/markdown
+    restart: unless-stopped
+
+volumes:
+  markopolis_data:
+    driver: local

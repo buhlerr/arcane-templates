@@ -1,0 +1,23 @@
+x-arcane:
+  icon: https://raw.githubusercontent.com/xneo1/portainer_templates/master/Images/overseerr-icon.png
+  icon-light: https://raw.githubusercontent.com/xneo1/portainer_templates/master/Images/overseerr-icon.png
+  icon-dark: https://raw.githubusercontent.com/xneo1/portainer_templates/master/Images/overseerr-icon.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: tools
+      color: blue
+
+services:
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:latest
+    container_name: overseerr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Athens
+    volumes:
+      - /portainer/Files/AppData/Config/overseer:/config
+    ports:
+      - 5055:5055
+    restart: unless-stopped

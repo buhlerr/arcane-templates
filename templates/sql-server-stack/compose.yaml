@@ -1,0 +1,27 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/sql-server.svg
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/sql-server.svg
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/sql-server.svg
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: database
+      color: purple
+
+name: mssql
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2025-latest
+    restart: unless-stopped
+    environment:
+      ACCEPT_EULA: ${ACCEPT_EULA}
+      MSSQL_SA_PASSWORD: ${MSSQL_SA_PASSWORD}
+      MSSQL_PID: ${MSSQL_PID:-Express}
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssqldata:/var/opt/mssql
+
+volumes:
+  mssqldata:

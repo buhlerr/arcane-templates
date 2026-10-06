@@ -1,0 +1,79 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/rabbitmq.png
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons/png/rabbitmq.png
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons/png/rabbitmq.png
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: streaming-messaging
+      color: red
+
+name: rabbitmq
+
+x-rmq: &rmq
+  build: .
+  image: miget-rabbitmq:local
+  restart: unless-stopped
+
+services:
+  rmq-1:
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    <<: *rmq
+    hostname: rmq-1
+    environment:
+      RABBITMQ_NODENAME: rabbit@rmq-1
+    ports:
+      - "5000:5000"
+      - "5672"
+      - "4369"
+      - "25672"
+    volumes:
+      - rmqdata-1:/var/lib/rabbitmq/mnesia
+
+  rmq-2:
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    <<: *rmq
+    hostname: rmq-2
+    environment:
+      RABBITMQ_NODENAME: rabbit@rmq-2
+    ports:
+      - "5000"
+      - "5672"
+      - "4369"
+      - "25672"
+    volumes:
+      - rmqdata-2:/var/lib/rabbitmq/mnesia
+
+  rmq-3:
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    <<: *rmq
+    hostname: rmq-3
+    environment:
+      RABBITMQ_NODENAME: rabbit@rmq-3
+    ports:
+      - "5000"
+      - "5672"
+      - "4369"
+      - "25672"
+    volumes:
+      - rmqdata-3:/var/lib/rabbitmq/mnesia
+
+volumes:
+  rmqdata-1:
+  rmqdata-2:
+  rmqdata-3:

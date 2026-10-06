@@ -1,0 +1,19 @@
+x-arcane:
+  icon: https://raw.githubusercontent.com/medama-io/medama/main/.github/images/banner-dark.svg
+  icon-light: https://raw.githubusercontent.com/medama-io/medama/main/.github/images/banner-dark.svg
+  icon-dark: https://raw.githubusercontent.com/medama-io/medama/main/.github/images/banner-dark.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: analytics
+      color: gray
+
+services:
+    medama:
+        image: ghcr.io/medama-io/medama:latest
+        ports:
+            - "8010:8080"
+        volumes:
+            - /portainer/Files/AppData/Config/medama:/app/data
+volumes:
+    medama-data:

@@ -1,0 +1,27 @@
+x-arcane:
+  icon: https://avatars.githubusercontent.com/u/108325695
+  icon-light: https://avatars.githubusercontent.com/u/108325695
+  icon-dark: https://avatars.githubusercontent.com/u/108325695
+  urls:
+    - https://github.com/lissy93/portainer-templates
+  tags:
+    - name: messaging
+      color: gray
+    - name: social
+      color: gray
+
+services:
+  databag:
+    container_name: databag
+    image: balzack/databag:0.1.18
+    restart: unless-stopped
+    ports:
+      - "7000:7000"
+    environment:
+      # Password for the admin dashboard (set the Federated Host + account links there)
+      - ADMIN=${DATABAG_ADMIN_PASSWORD}
+    volumes:
+      - databag-data:/var/lib/databag
+
+volumes:
+  databag-data:

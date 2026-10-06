@@ -1,0 +1,24 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/livekit-agents.svg
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/livekit-agents.svg
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/livekit-agents.svg
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: voice-realtime
+      color: gray
+
+name: livekit-agents
+
+services:
+  agent:
+    build:
+      context: https://github.com/livekit-examples/agent-starter-python.git
+    restart: unless-stopped
+    environment:
+      LIVEKIT_URL: ${LIVEKIT_URL:-ws://livekit:5000}
+      LIVEKIT_API_KEY: ${LIVEKIT_API_KEY}
+      LIVEKIT_API_SECRET: ${LIVEKIT_API_SECRET}
+      ELEVEN_API_KEY: ${ELEVEN_API_KEY:-}
+      DEEPGRAM_API_KEY: ${DEEPGRAM_API_KEY:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}

@@ -1,0 +1,27 @@
+x-arcane:
+  icon: https://www.gravatar.com/avatar/c7d3730588d3f501d6753aa22a731bc0?s=80&r=g&d=404
+  icon-light: https://www.gravatar.com/avatar/c7d3730588d3f501d6753aa22a731bc0?s=80&r=g&d=404
+  icon-dark: https://www.gravatar.com/avatar/c7d3730588d3f501d6753aa22a731bc0?s=80&r=g&d=404
+  urls:
+    - https://github.com/portainer/templates
+  tags:
+    - name: edge
+      color: gray
+
+services:
+  edgeconnector-aggregator:
+    image: softingindustrial/edgeaggregator
+    restart: unless-stopped
+    ports:
+      - 443
+      - 8099
+      - 4897
+    environment:
+      - TZ="UTC"
+    volumes:
+      - config_data:/config
+      - mqtt_data:/mqtt
+
+volumes:
+  config_data:
+  mqtt_data:

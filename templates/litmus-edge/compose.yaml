@@ -1,0 +1,28 @@
+x-arcane:
+  icon: https://www.gravatar.com/avatar/3c545a4e847eb960bfc9bf5bf877c979?s=120&r=g&d=404
+  icon-light: https://www.gravatar.com/avatar/3c545a4e847eb960bfc9bf5bf877c979?s=120&r=g&d=404
+  icon-dark: https://www.gravatar.com/avatar/3c545a4e847eb960bfc9bf5bf877c979?s=120&r=g&d=404
+  urls:
+    - https://github.com/portainer/templates
+  tags:
+    - name: edge
+      color: gray
+
+version: '3.9'
+
+services:
+  le:
+    container_name: LE
+    image: litmusedge.azurecr.io/litmusedge-std-docker:latest
+    ports:
+      - target: 443
+        published: 8443
+        protocol: tcp
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - edge-data:/var
+    restart: unless-stopped
+
+volumes:
+  edge-data:

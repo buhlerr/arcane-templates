@@ -1,0 +1,20 @@
+x-arcane:
+  icon: https://traggo.net/images/favicon.png
+  icon-light: https://traggo.net/images/favicon.png
+  icon-dark: https://traggo.net/images/favicon.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: time-tracking
+      color: gray
+
+services:
+  traggo:
+    image: traggo/server:latest
+    ports:
+      - 3030:3030
+    environment:
+      TRAGGO_DEFAULT_USER_NAME: "admin"
+      TRAGGO_DEFAULT_USER_PASS: "mynewpassword"
+    volumes:
+      - /portainer/Files/AppData/Config/traggo/data:/opt/traggo/data

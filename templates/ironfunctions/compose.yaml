@@ -1,0 +1,34 @@
+x-arcane:
+  icon: https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/ironfunctions.png
+  icon-light: https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/ironfunctions.png
+  icon-dark: https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/ironfunctions.png
+  urls:
+    - https://github.com/portainer/templates
+  tags:
+    - name: serverless
+      color: gray
+
+version: '3'
+
+services:
+  api:
+    image: iron/functions
+    deploy:
+      replicas: 1
+    volumes:
+      - api_data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 8080
+
+  ui:
+    image: iron/functions-ui
+    deploy:
+      replicas: 1
+    environment:
+      API_URL: http://api:8080
+    ports:
+      - 4000
+
+volumes:
+    api_data:

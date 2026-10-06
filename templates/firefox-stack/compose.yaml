@@ -1,0 +1,27 @@
+x-arcane:
+  icon: https://raw.githubusercontent.com/xneo1/portainer_templates/master/Images/Firefox.png
+  icon-light: https://raw.githubusercontent.com/xneo1/portainer_templates/master/Images/Firefox.png
+  icon-dark: https://raw.githubusercontent.com/xneo1/portainer_templates/master/Images/Firefox.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: browsers
+      color: gray
+
+volumes:
+  firefox:
+
+services:
+  firefox:
+    image: ghcr.io/linuxserver/firefox
+    container_name: firefox
+    environment:
+      - PUID=1026 #change this to for your settings
+      - PGID=100 #change this to for your settings
+      - TZ=Europe/Athens  #change this to for your location
+    volumes:
+      - /portainer/Files/AppData/Config/firefox:/config
+    ports:
+      - 3456:3000
+    shm_size: "1gb"
+    restart: unless-stopped

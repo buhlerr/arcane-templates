@@ -1,0 +1,41 @@
+x-arcane:
+  icon: https://raw.githubusercontent.com/docker-library/docs/b962028212dbd77c9531dbcf8d5a81db79d4a735/monica/logo.svg
+  icon-light: https://raw.githubusercontent.com/docker-library/docs/b962028212dbd77c9531dbcf8d5a81db79d4a735/monica/logo.svg
+  icon-dark: https://raw.githubusercontent.com/docker-library/docs/b962028212dbd77c9531dbcf8d5a81db79d4a735/monica/logo.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: social
+      color: gray
+
+services:
+  monica-app:
+    image: monica:apache
+    depends_on:
+      - monica-db
+    ports:
+      - 818:80
+    environment:
+      - DB_HOST=db
+      - DB_USERNAME=monica
+      - DB_PASSWORD=secret
+    volumes:
+      - /portainer/Files/AppData/Config/monica:/var/www/html/storage
+    restart: always
+
+  monica-db:
+    image: mysql:5.7
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=monica
+      - MYSQL_USER=monica
+      - MYSQL_PASSWORD=secret
+    volumes:
+      - /portainer/Files/AppData/Config/monica/mysql:/var/lib/mysql
+    restart: always
+
+volumes:
+  data:
+    name: data
+  mysql:
+    name: mysql

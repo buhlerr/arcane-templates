@@ -1,0 +1,25 @@
+x-arcane:
+  icon: https://raw.githubusercontent.com/traefik/traefik/master/docs/content/assets/img/traefik.logo.png
+  icon-light: https://raw.githubusercontent.com/traefik/traefik/master/docs/content/assets/img/traefik.logo.png
+  icon-dark: https://raw.githubusercontent.com/traefik/traefik/master/docs/content/assets/img/traefik.logo.png
+  urls:
+    - https://github.com/lissy93/portainer-templates
+  tags:
+    - name: web
+      color: blue
+    - name: network
+      color: gray
+
+services:
+  reverse-proxy:
+    image: traefik:v3
+    command: --api.insecure=true --providers.docker
+    restart: unless-stopped
+    ports:
+      # The HTTP port
+      - "80:80"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events (read-only)
+      - /var/run/docker.sock:/var/run/docker.sock:ro

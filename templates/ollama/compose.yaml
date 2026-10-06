@@ -1,0 +1,25 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/ollama.png
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons/png/ollama.png
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons/png/ollama.png
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: llm-infrastructure
+      color: gray
+
+name: ollama
+
+services:
+  ollama:
+    image: ollama/ollama:0.30.8
+    restart: unless-stopped
+    environment:
+      OLLAMA_HOST: "0.0.0.0:5000"
+    ports:
+      - "5000:5000"
+    volumes:
+      - models:/root/.ollama
+
+volumes:
+  models:

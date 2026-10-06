@@ -1,0 +1,26 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/azure-pipelines-agent.svg
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/azure-pipelines-agent.svg
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/azure-pipelines-agent.svg
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: dev-tools
+      color: blue
+
+name: azp-agent
+
+services:
+  agent:
+    build: .
+    restart: unless-stopped
+    environment:
+      AZP_URL: ${AZP_URL}
+      AZP_TOKEN: ${AZP_TOKEN}
+      AZP_POOL: ${AZP_POOL:-Default}
+      AZP_AGENT_NAME: ${AZP_AGENT_NAME:-miget-agent}
+    volumes:
+      - agentwork:/azp/_work
+
+volumes:
+  agentwork:

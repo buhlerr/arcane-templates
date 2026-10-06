@@ -1,0 +1,30 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/openclaw.png
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons/png/openclaw.png
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons/png/openclaw.png
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: ai-agents
+      color: pink
+
+name: openclaw
+
+services:
+  openclaw:
+    image: coollabsio/openclaw:2026.7.1
+    restart: unless-stopped
+    environment:
+      PORT: "5000"
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      AUTH_USERNAME: ${AUTH_USERNAME:-admin}
+      AUTH_PASSWORD: ${AUTH_PASSWORD}
+      OPENCLAW_GATEWAY_TOKEN: ${OPENCLAW_GATEWAY_TOKEN}
+      OPENCLAW_ALLOWED_ORIGINS: ${OPENCLAW_ALLOWED_ORIGINS:-}
+    ports:
+      - "5000:5000"
+    volumes:
+      - openclawdata:/data
+
+volumes:
+  openclawdata:

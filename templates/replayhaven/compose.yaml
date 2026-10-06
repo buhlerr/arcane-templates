@@ -1,0 +1,74 @@
+x-arcane:
+  icon: https://raw.githubusercontent.com/SauerExe/ReplayHaven/main/desktop/icon-source.png
+  icon-light: https://raw.githubusercontent.com/SauerExe/ReplayHaven/main/desktop/icon-source.png
+  icon-dark: https://raw.githubusercontent.com/SauerExe/ReplayHaven/main/desktop/icon-source.png
+  urls:
+    - https://github.com/SauerExe/ReplayHaven
+  tags:
+    - name: games
+      color: gray
+    - name: video
+      color: red
+    - name: media
+      color: red
+
+# ReplayHaven archive server.
+#
+#   cp .env.example .env      # set REPLAYHAVEN_ACCESS_TOKEN and REPLAYHAVEN_PUBLIC_ORIGIN
+#   docker compose up -d      # pulls the published image and starts the server
+#
+# Building from a source checkout instead: `bash setup-server.sh` (or
+# `docker build -t replayhaven:local .` and REPLAYHAVEN_IMAGE=replayhaven:local in .env).
+#
+# Behind Coolify/Traefik: remove the `ports:` section (Traefik reaches the container over the
+# Docker network), give the service the domain https://<your-domain>:8787 in Coolify and set
+# REPLAYHAVEN_PUBLIC_ORIGIN=https://<your-domain> and REPLAYHAVEN_TRUST_PROXY (the proxy's
+# address range, or true when only the proxy can reach the container).
+# See docs/SERVER.md, "Deploy behind Coolify/Traefik".
+services:
+  replayhaven:
+    image: ${REPLAYHAVEN_IMAGE:-ghcr.io/sauerexe/replayhaven:1}
+    container_name: replayhaven
+    restart: unless-stopped
+    ports:
+      - '${REPLAYHAVEN_HOST_PORT:-8787}:8787'
+    env_file:
+      # Every variable in .env reaches the container (see .env.example).
+      - path: .env
+        required: false
+    environment:
+      REPLAYHAVEN_ACCESS_TOKEN: ${REPLAYHAVEN_ACCESS_TOKEN:?Set REPLAYHAVEN_ACCESS_TOKEN in .env (copy .env.example)}
+      REPLAYHAVEN_PUBLIC_ORIGIN: ${REPLAYHAVEN_PUBLIC_ORIGIN:-http://localhost:8787}
+      # Listed so panels like Portainer and Coolify pass them on (they ignore unlisted
+      # variables); empty means the default. See .env.example. REPLAYHAVEN_CLIENT_DOWNLOAD_URL is
+      # not listed: an empty value would replace the release URL built into the image, so set
+      # it in .env (env_file above) when you need it.
+      REPLAYHAVEN_TRUST_PROXY: ${REPLAYHAVEN_TRUST_PROXY:-}
+      REPLAYHAVEN_PLAYBACK: ${REPLAYHAVEN_PLAYBACK:-web}
+      REPLAYHAVEN_CONTENT_LANGUAGE: ${REPLAYHAVEN_CONTENT_LANGUAGE:-}
+      REPLAYHAVEN_SUPPORT_BANNER: ${REPLAYHAVEN_SUPPORT_BANNER:-}
+      REPLAYHAVEN_LOG_LEVEL: ${REPLAYHAVEN_LOG_LEVEL:-}
+      REPLAYHAVEN_GAME_METADATA: ${REPLAYHAVEN_GAME_METADATA:-}
+      REPLAYHAVEN_IGDB_CLIENT_ID: ${REPLAYHAVEN_IGDB_CLIENT_ID:-}
+      REPLAYHAVEN_IGDB_CLIENT_SECRET: ${REPLAYHAVEN_IGDB_CLIENT_SECRET:-}
+      REPLAYHAVEN_AI_PROVIDER: ${REPLAYHAVEN_AI_PROVIDER:-none}
+      REPLAYHAVEN_AI_MODEL: ${REPLAYHAVEN_AI_MODEL:-}
+      REPLAYHAVEN_LOCAL_AI_URL: ${REPLAYHAVEN_LOCAL_AI_URL:-}
+      REPLAYHAVEN_LOCAL_AI_KEY: ${REPLAYHAVEN_LOCAL_AI_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      REPLAYHAVEN_OIDC_ISSUER: ${REPLAYHAVEN_OIDC_ISSUER:-}
+      REPLAYHAVEN_OIDC_CLIENT_ID: ${REPLAYHAVEN_OIDC_CLIENT_ID:-}
+      REPLAYHAVEN_OIDC_CLIENT_SECRET: ${REPLAYHAVEN_OIDC_CLIENT_SECRET:-}
+      REPLAYHAVEN_OIDC_NAME: ${REPLAYHAVEN_OIDC_NAME:-}
+      REPLAYHAVEN_OIDC_SCOPES: ${REPLAYHAVEN_OIDC_SCOPES:-}
+      REPLAYHAVEN_OIDC_ADMIN_GROUP: ${REPLAYHAVEN_OIDC_ADMIN_GROUP:-}
+      REPLAYHAVEN_OIDC_AUTO_CREATE: ${REPLAYHAVEN_OIDC_AUTO_CREATE:-}
+      REPLAYHAVEN_PASSWORD_LOGIN: ${REPLAYHAVEN_PASSWORD_LOGIN:-}
+    volumes:
+      # Originals, thumbnails, playback copies and the SQLite database.
+      - archive:/app/vault-data
+      # Optional: drop ReplayHaven-Client-Setup.exe here to serve it from this server
+      # instead of redirecting to the GitHub release.
+      - ./release:/app/release:ro
+volumes:
+  archive:

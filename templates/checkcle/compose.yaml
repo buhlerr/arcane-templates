@@ -1,0 +1,31 @@
+x-arcane:
+  icon: https://camo.githubusercontent.com/aa94c14278d8f68ddf6466f69f6dedac445f6320eb3ec562c3eae760e0052719/68747470733a2f2f7075622d34613430363233303330323034343566386632383961326665653834663965382e72322e6465762f696d616765732f7365727665722d64657461696c2d706167652e706e67
+  icon-light: https://camo.githubusercontent.com/aa94c14278d8f68ddf6466f69f6dedac445f6320eb3ec562c3eae760e0052719/68747470733a2f2f7075622d34613430363233303330323034343566386632383961326665653834663965382e72322e6465762f696d616765732f7365727665722d64657461696c2d706167652e706e67
+  icon-dark: https://camo.githubusercontent.com/aa94c14278d8f68ddf6466f69f6dedac445f6320eb3ec562c3eae760e0052719/68747470733a2f2f7075622d34613430363233303330323034343566386632383961326665653834663965382e72322e6465762f696d616765732f7365727665722d64657461696c2d706167652e706e67
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: monitoring
+      color: orange
+
+version: '3.9'
+
+services:
+  checkcle:
+    image: operacle/checkcle:latest
+    container_name: checkcle
+    restart: unless-stopped
+    ports:
+      - 8090:8090
+    volumes:
+      - /portainer/Files/AppData/Config/checkcle/pb_data:/mnt/pb_data
+    ulimits:
+      nofile:
+        soft: 4096
+        hard: 8192
+    networks:
+      - checkcle-network
+
+networks:
+  checkcle-network:
+    driver: bridge

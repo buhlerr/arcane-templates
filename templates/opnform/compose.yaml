@@ -1,0 +1,21 @@
+x-arcane:
+  icon: https://opnform.com/img/logo.svg
+  icon-light: https://opnform.com/img/logo.svg
+  icon-dark: https://opnform.com/img/logo.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: productivity
+      color: blue
+    - name: low-code
+      color: gray
+
+services:
+  opnform:
+    container_name: opnform
+    volumes:
+      - /portainer/Files/AppData/Config/opnform:/persist
+    ports:
+      - 8380:80
+    image: jhumanj/opnform
+networks: {}

@@ -1,0 +1,26 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/gitlab.png
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons/png/gitlab.png
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons/png/gitlab.png
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: dev-tools
+      color: blue
+
+name: gitlab-runner
+
+services:
+  runner:
+    build: .
+    restart: unless-stopped
+    environment:
+      CI_SERVER_URL: ${CI_SERVER_URL:-https://gitlab.com}
+      CI_SERVER_TOKEN: ${CI_SERVER_TOKEN}
+    volumes:
+      - runnerconfig:/etc/gitlab-runner
+      - runnerhome:/home/gitlab-runner
+
+volumes:
+  runnerconfig:
+  runnerhome:

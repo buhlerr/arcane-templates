@@ -1,0 +1,29 @@
+x-arcane:
+  icon: https://autobrr.com/img/logo.png
+  icon-light: https://autobrr.com/img/logo.png
+  icon-dark: https://autobrr.com/img/logo.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: downloaders
+      color: gray
+    - name: multimedia
+      color: red
+
+services:
+  autobrr:
+    container_name: autobrr
+    image: ghcr.io/autobrr/autobrr:latest
+    restart: unless-stopped
+    #logging:
+    #  driver: json-file
+    #  options:
+    #    max-file: ${DOCKERLOGGING_MAXFILE}
+    #    max-size: ${DOCKERLOGGING_MAXSIZE}
+    user: 1000:1000
+    environment:
+      - TZ=Europe/Athens
+    volumes:
+      - /portainer/Files/AppData/Config/autobrr/config:/config
+    ports:
+      - 7474:7474

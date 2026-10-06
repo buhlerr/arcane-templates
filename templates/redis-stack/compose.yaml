@@ -1,0 +1,25 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/redis.png
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons/png/redis.png
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons/png/redis.png
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: caches-key-value
+      color: gray
+
+name: redis
+
+services:
+  redis:
+    build: .
+    restart: unless-stopped
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+
+volumes:
+  redisdata:

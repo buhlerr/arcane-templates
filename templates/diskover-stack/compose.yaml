@@ -1,0 +1,45 @@
+x-arcane:
+  icon: https://github.com/diskoverdata/diskover-docs/raw/main/source_files/images/diskover_logo_only.png
+  icon-light: https://github.com/diskoverdata/diskover-docs/raw/main/source_files/images/diskover_logo_only.png
+  icon-dark: https://github.com/diskoverdata/diskover-docs/raw/main/source_files/images/diskover_logo_only.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: files
+      color: gray
+
+#PREREQUISITES
+#Run below commands BEFORE DEPLOYING
+#sudo chown -R 1000:1000 /portainer/Files/AppData/Config/diskover/es_data
+#sudo sysctl -w vm.max_map_count=262144
+#----------#
+#Run initial crawl after deploy with: python3 /app/diskover/diskover.py /data
+
+services:
+  elasticsearch:
+    image: elasticsearch:7.17.10
+    container_name: elasticsearch    # Must be this!
+    user: "1000:1000"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - /portainer/Files/AppData/Config/diskover/es_data:/usr/share/elasticsearch/data
+    restart: unless-stopped
+
+  diskover:
+    image: linuxserver/diskover:latest
+    container_name: diskover
+    ports:
+      - "8884:80"
+    volumes:
+      - /mnt/MYSMBMOUNT:/data:ro
+      - /portainer/Files/AppData/Config/diskover/data:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Athens
+    depends_on:
+      - elasticsearch
+    restart: unless-stopped

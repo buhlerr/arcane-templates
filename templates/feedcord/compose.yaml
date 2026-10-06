@@ -1,0 +1,17 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/feedcord.svg
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/feedcord.svg
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/feedcord.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: news
+      color: gray
+
+services:
+  myfeedcord:
+    image: qolors/feedcord:latest
+    container_name: FeedCord
+    restart: unless-stopped
+    volumes:
+      - /portainer/Files/AppData/Config/feedcord/appsettings.json:/app/config/appsettings.json

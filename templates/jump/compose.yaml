@@ -1,0 +1,24 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/jump.svg
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/jump.svg
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/jump.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: dashboard
+      color: gray
+
+services:
+    web:
+        image: daledavies/jump
+        ports:
+            - 9123:8080
+        volumes:
+            - /portainer/Files/AppData/Config/jumper/backgrounds:/backgrounds
+            - /portainer/Files/AppData/Config/jumper/favicon:/favicon
+            - /portainer/Files/AppData/Config/jumper/search:/search
+            - /portainer/Files/AppData/Config/jumper/sites:/sites
+        environment:
+            SITENAME: 'Custom site name'
+            OWMAPIKEY: '0a1b2c3d4e5f6a7b8c9d0a1b'
+            LATLONG: '51.509865,-0.118092'

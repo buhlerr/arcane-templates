@@ -1,0 +1,24 @@
+x-arcane:
+  icon: https://upload.wikimedia.org/wikipedia/commons/9/9d/Grafana_logo.png?20170804201233
+  icon-light: https://upload.wikimedia.org/wikipedia/commons/9/9d/Grafana_logo.png?20170804201233
+  icon-dark: https://upload.wikimedia.org/wikipedia/commons/9/9d/Grafana_logo.png?20170804201233
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: analytics
+      color: gray
+    - name: monitoring
+      color: orange
+    - name: visualization
+      color: gray
+
+services:
+  grafana:
+      image: grafana/grafana:latest
+      ports:
+        - 3023:3000 ##changed from 3000 to 3023 to decrease possibility of conflict on a system that 3000 is already occupied
+      restart: unless-stopped
+      volumes:
+        - /portainer/Files/AppData/Config/grafana:/var/lib/grafana
+      user: "0"
+##With this one we install Latest Grafana which in December 13th 2022 is 9.3.1

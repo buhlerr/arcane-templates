@@ -1,0 +1,29 @@
+x-arcane:
+  icon: https://raw.githubusercontent.com/zhfahim/anchor/main/web/public/icons/anchor_icon.png
+  icon-light: https://raw.githubusercontent.com/zhfahim/anchor/main/web/public/icons/anchor_icon.png
+  icon-dark: https://raw.githubusercontent.com/zhfahim/anchor/main/web/public/icons/anchor_icon.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: productivity
+      color: blue
+
+services:
+  anchor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: anchor
+    container_name: anchor
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - PG_USER=anchor
+      - PG_PASSWORD=password
+      - PG_DATABASE=anchor
+    volumes:
+      - anchor_data:/data
+
+volumes:
+  anchor_data:

@@ -1,0 +1,24 @@
+x-arcane:
+  icon: https://whisparr.com/logo/256.png
+  icon-light: https://whisparr.com/logo/256.png
+  icon-dark: https://whisparr.com/logo/256.png
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: adult
+      color: gray
+
+services:
+  get_iplayer:
+    image: ghcr.io/thespad/whisparr:latest
+    container_name: whisparr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Athens
+    volumes:
+      - /portainer/Files/AppData/Config/whisparr:/config
+      - /portainer/Files/AppData/Config/whisparr/downloads:/downloads
+    ports:
+      - 6969:6969
+    restart: unless-stopped

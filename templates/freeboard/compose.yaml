@@ -1,0 +1,22 @@
+x-arcane:
+  icon: https://raw.githubusercontent.com/xneo1/portainer_templates/master/Images/freeboard.jpg
+  icon-light: https://raw.githubusercontent.com/xneo1/portainer_templates/master/Images/freeboard.jpg
+  icon-dark: https://raw.githubusercontent.com/xneo1/portainer_templates/master/Images/freeboard.jpg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: dashboard
+      color: gray
+    - name: iot
+      color: pink
+
+services:
+    nginx:
+        image: nginx:1.13
+        ports:
+            - "8003:80"
+        volumes_from:
+            - freeboard:ro
+    freeboard:
+        image: freeboard
+        build: .

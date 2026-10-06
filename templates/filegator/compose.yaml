@@ -1,0 +1,20 @@
+x-arcane:
+  icon: https://filegator.io/filegator_logo.svg
+  icon-light: https://filegator.io/filegator_logo.svg
+  icon-dark: https://filegator.io/filegator_logo.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: files
+      color: gray
+
+services:
+  filegator:
+    image: filegator/filegator:latest
+    container_name: filegator
+    ports:
+      - "8886:80"
+    volumes:
+      - /mnt/MYSMBMOUNT:/srv/files:shared  # Bind your SMB mount
+      - /portainer/Files/AppData/Config/filegator/data:/config  # Persist config
+    restart: unless-stopped

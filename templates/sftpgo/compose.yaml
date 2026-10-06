@@ -1,0 +1,33 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/sftpgo.png
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons/png/sftpgo.png
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons/png/sftpgo.png
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: object-storage
+      color: purple
+
+name: sftpgo
+
+services:
+  sftpgo:
+    image: drakkan/sftpgo:v2.7.5
+    restart: unless-stopped
+    environment:
+      SFTPGO_HTTPD__BINDINGS__0__ADDRESS: 0.0.0.0
+      SFTPGO_HTTPD__BINDINGS__0__PORT: "5000"
+      SFTPGO_SFTPD__BINDINGS__0__PORT: "2022"
+      SFTPGO_DATA_PROVIDER__CREATE_DEFAULT_ADMIN: "true"
+      SFTPGO_DEFAULT_ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      SFTPGO_DEFAULT_ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+    ports:
+      - "5000:5000"
+      - "2022"
+    volumes:
+      - sftpgodata:/var/lib/sftpgo
+      - sftpgohome:/srv/sftpgo
+
+volumes:
+  sftpgodata:
+  sftpgohome:

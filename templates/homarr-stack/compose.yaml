@@ -1,0 +1,24 @@
+x-arcane:
+  icon: https://homarr.dev/img/logo.svg
+  icon-light: https://homarr.dev/img/logo.svg
+  icon-dark: https://homarr.dev/img/logo.svg
+  urls:
+    - https://github.com/xneo1/portainer_templates
+  tags:
+    - name: dashboard
+      color: gray
+
+services:
+  homarr:
+    container_name: homarr
+    image: ghcr.io/ajnart/homarr:latest
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Athens
+      - DEFAULT_COLOR_SCHEME=dark
+    volumes:
+      - /portainer/Files/AppData/Config/homarr/configs:/app/data/configs
+      - /portainer/Files/AppData/Config/homarr/icons:/app/public/icons
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 7575:7575

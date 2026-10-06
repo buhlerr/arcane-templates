@@ -1,0 +1,38 @@
+x-arcane:
+  icon: https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/tosibox.png
+  icon-light: https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/tosibox.png
+  icon-dark: https://portainer-io-assets.sfo2.digitaloceanspaces.com/logos/tosibox.png
+  urls:
+    - https://github.com/portainer/templates
+  tags:
+    - name: edge
+      color: gray
+
+version: "3.7"
+services:
+  tosibox-lock-for-container:
+    container_name: tosibox-lock-for-container
+    image: tosibox/lock-for-container:latest
+    hostname: tb-lfc
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - SYS_TIME
+      - SYS_PTRACE
+    ports:
+      - 80
+    networks:
+      - tbnet
+    volumes:
+      - tosibox-lfc:/etc/tosibox/docker_volume
+    environment:
+      - LICENSE_KEY=${LICENSE_KEY}
+volumes:
+  tosibox-lfc:
+    name: tosibox-lfc
+networks:
+  tbnet:
+    name: tbnet
+    ipam:
+      config:
+        - subnet: 10.10.206.0/24

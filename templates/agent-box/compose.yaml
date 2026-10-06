@@ -1,0 +1,28 @@
+x-arcane:
+  icon: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/agent-box.svg
+  icon-light: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/agent-box.svg
+  icon-dark: https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/agent-box.svg
+  urls:
+    - https://github.com/deployable-sh/stacks
+  tags:
+    - name: ai-agents
+      color: pink
+
+name: agent-box
+
+services:
+  agent-box:
+    build: .
+    image: miget-agent-box:local
+    restart: unless-stopped
+    environment:
+      TTYD_USERNAME: ${TTYD_USERNAME:-agent}
+      TTYD_PASSWORD: ${TTYD_PASSWORD}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+    ports:
+      - "5000:5000"
+    volumes:
+      - workspace:/workspace
+
+volumes:
+  workspace:

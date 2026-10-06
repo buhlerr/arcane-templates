@@ -1,0 +1,18 @@
+x-arcane:
+  icon: https://www.gravatar.com/avatar/c7d3730588d3f501d6753aa22a731bc0?s=80&r=g&d=404
+  icon-light: https://www.gravatar.com/avatar/c7d3730588d3f501d6753aa22a731bc0?s=80&r=g&d=404
+  icon-dark: https://www.gravatar.com/avatar/c7d3730588d3f501d6753aa22a731bc0?s=80&r=g&d=404
+  urls:
+    - https://github.com/portainer/templates
+  tags:
+    - name: edge
+      color: gray
+
+services:
+  edgeconnector-840d:
+    image: softingindustrial/edgeconnector-840d
+    restart: unless-stopped
+    ports:
+      - 443
+      - 8099
+      - 4897
